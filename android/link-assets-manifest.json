@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Belanosima-Bold.ttf",
+      "sha1": "292f5068f6036b602e726f2e958177110cb29f78"
+    },
+    {
+      "path": "src/assets/fonts/Belanosima-Regular.ttf",
+      "sha1": "643d7171b9cfec591b680520aab32f9f3efddf85"
+    },
+    {
+      "path": "src/assets/fonts/Belanosima-SemiBold.ttf",
+      "sha1": "bf968db31216744d7a3fc70f1ba922626e1f826f"
+    }
+  ]
+}
