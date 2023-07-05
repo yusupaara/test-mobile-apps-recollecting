@@ -7,9 +7,11 @@ import {
     TextInput,
     TouchableWithoutFeedback,
     Keyboard,
+    ToastAndroid
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Axios from "axios";
 
 const styles = StyleSheet.create({
     main: {
@@ -36,6 +38,8 @@ const styles = StyleSheet.create({
 
 const Login = (props) => {
 
+    const linkTo = 'http://10.0.2.2:2000'
+
     const globalAuth = useSelector((state) => state.auth)
     const dispatch = useDispatch();
 
@@ -52,16 +56,32 @@ const Login = (props) => {
     };
 
     const loginBtnHandler = () => {
-        AsyncStorage.setItem("username", loginForm.username)
+
+        Axios.get(`${linkTo}/users`, {
+            params: {
+                username: loginForm.username,
+                password: loginForm.password
+            }
+        })
+        .then((res) => {
+            if (res.data.length){
+         AsyncStorage.setItem("username", res.data[0].username)
         .then(()=>{
             dispatch({
                 type: "CHANGE_USERNAME",
-                payload: loginForm.username
+                payload: res.data[0].username
             })
         })
         .catch(() => {
             console.log("Error")       
         })
+        } else {
+            ToastAndroid.show("Username / Password Invalid", ToastAndroid.SHORT)
+        }})
+        .catch((err) => {
+            console.log((err));
+        })
+
     }
 
     return (

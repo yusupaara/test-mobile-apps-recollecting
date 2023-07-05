@@ -58,12 +58,21 @@ function HomeScreen(props) {
 //   const globalState = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
+  const globalAuth = useSelector(state => state.auth)
+
+  const linkTo = 'http://10.0.2.2:2000'
+  // const linkTo = 'http://localhost:2000'
+
   const [userList, setUserList] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [userInput, setUserInput] = useState("");
 
   const fetchUsers = () => {
-    Axios.get("http://10.0.2.2:2000/users")
+    Axios.get(`${linkTo}/users`, {
+      params: {
+        loggedinUser: globalAuth.username
+      }
+    })
     .then((res) => {
         setUserList(res.data);
     })
@@ -78,7 +87,7 @@ function HomeScreen(props) {
 
   const refreshHandler = () => {
     setIsRefreshing(true)
-    Axios.get("http://10.0.2.2:2000/users")
+    Axios.get(`${linkTo}/users`)
     .then((res) => {
         setUserList(res.data);
         setIsRefreshing(false)
@@ -119,8 +128,9 @@ function HomeScreen(props) {
   }
 
   const sendBtnHandler = () => {
-    Axios.post("http://10.0.2.2:2000/users",{
-      username: userInput
+    Axios.post(`${linkTo}/users`,{
+      username: userInput,
+      loggedinUser: globalAuth.username
     })
     .then((res) => {
       setUserInput("")
