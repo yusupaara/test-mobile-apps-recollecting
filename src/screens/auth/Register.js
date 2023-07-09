@@ -52,36 +52,21 @@ const Register = () => {
     };
 
     const registerBtnHandler = () => {
-        // GET: check username
-        Axios.get("http://10.0.2.2:2000/users",{
-            params: {
-                username: registerForm.username
-            }
+        Axios.post("http://10.0.2.2:2000/users", {
+            username: registerForm.username,
+            password: registerForm.password
         })
-        .then((res) => {
-            if(!res.data.length){
-                Axios.post("http://10.0.2.2:2000/users", {
-                    username: registerForm.username,
-                    password: registerForm.password
-                })
-                .then(() => {
-                    AsyncStorage.setItem("username", registerForm.username)
-                    .then(() => {
-                    dispatch({
-                        type: "CHANGE_USERNAME",
-                        payload: registerForm.username
-                    })
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-            } else {
-                ToastAndroid.show('Username has benn used', ToastAndroid.SHORT)
-            }
+        .then(() => {
+            AsyncStorage.setItem("username", registerForm.username)
+            .then(() => {
+            dispatch({
+                type: "CHANGE_USERNAME",
+                payload: registerForm.username
+            })
+        })
+        .catch((err) => {
+            console.log(err);
+        })
         })
         .catch((err) => {
             console.log(err);

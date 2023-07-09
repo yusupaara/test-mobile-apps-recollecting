@@ -88,7 +88,7 @@ const Login = (props) => {
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <>        
             <View style={{...styles.main}}>
-            <Text>Username: {globalAuth.username}</Text>
+            {/* <Text>Username: {globalAuth.username}</Text> */}
                 <View>
                     <Text>Username</Text>
                     <View style={{...styles.textInput, marginBottom: 12}}>
